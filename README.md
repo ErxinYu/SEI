@@ -1,12 +1,10 @@
 # Overview
 This repository contains the code and dataset for the ACL ARR submission: "Self-Error-Instruct: Generalizing from Errors for LLMs Mathematical Reasoning"
 
-Although large language models demonstrate strong performance across various domains, they still struggle with numerous bad cases in mathematical reasoning. Previous approaches to learning from errors synthesize training data by solely extrapolating from isolated bad cases, thereby failing to generalize the extensive patterns inherent within these cases. This paper presents Self-Error-Instruct (SEI), a framework that addresses these model weaknesses and synthesizes more generalized targeted training data. Specifically, we explore a target model on two mathematical datasets, GSM8K and MATH, to pinpoint bad cases. Then, we generate error keyphrases for these cases based on the instructor model’s (GPT-4o) analysis and identify error types by clustering these keyphrases. Next, we sample a few bad cases during each generation for each identified error type and input them into the instructor model, which synthesizes additional training data using a self-instruct approach. This new data is refined through a one-shot learning process to ensure that only the most effective examples are kept. Finally, we use these curated data to fine-tune the target model, iteratively repeating the process to enhance performance. We apply our framework to LLaMA3-8B-Instruct and Qwen2.5-Math-7B-Instruct, achieving average performance gains of 2.55% on in-domain evaluations and 11.19% on out-of-domain evaluations. These results demonstrate the effectiveness of self-error instruction in improving LLMs’ mathematical reasoning through error generalization.
-
 
 
 ## Desc
 
 The figure illustrates our Self-Error-Instruct framework, which consists of four key steps: (1) Bad Case Extraction, where failure cases are identified from the target model. (2) Self-Error-Instruct, which generates error keyphrases, performs clustering, and synthesizes data tailored for each error type. (3) One-Shot Learning Data Selection, which filters and retains only high-quality and effective examples for training. (4) Iterative Training, where the target model is refined by fine-tuning it with the curated data and repeating the process to achieve further performance improvements.
 
-<img src="method.png" width="50%" height="auto" />
+<img src="method.png" width="100%" height="auto" />
