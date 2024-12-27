@@ -3,7 +3,6 @@ import json
 import os
 import re
 import sys
-sys.path.append('/home/yex/MWPBench/eval_vllm')
 import util as util
 from util import generate_completions
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
@@ -225,7 +224,7 @@ def main(args):
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_name_or_path", type=str, default='meta-llama/Meta-Llama-3-8B-Instruct')  # model path
-    parser.add_argument("--data_file", type=str, default='/home/yex/MWPBench/data/full_test.json')  # data path
+    parser.add_argument("--data_file", type=str, default='')  # data path
     parser.add_argument("--target_tasks", type=str, default="gsm8k,MATH.Algebra,MATH.Counting_&_Probability,MATH.Geometry,MATH.Intermediate_Algebra,MATH.Number_Theory,MATH.Prealgebra,MATH.Precalculus,college_math.algebra,college_math.precalculus,college_math.calculus,college_math.vector_calculus,college_math.probability,college_math.linear_algebra,college_math.differential_equation,tal,gaokao_bench_math_en,agieval.sat-math")  # choose from gsm8k,MATH.Algebra,MATH.Counting_&_Probability,MATH.Geometry,MATH.Intermediate_Algebra,MATH.Number_Theory,MATH.Prealgebra,MATH.Precalculus,college_math.algebra,college_math.precalculus,college_math.calculus,college_math.vector_calculus,college_math.probability,college_math.linear_algebra,college_math.differential_equation,tal,gaokao_bench_math_en,math23k_en,ape210k_en,agieval.gaokao-math-en,agieval.math,agieval.sat-math
     parser.add_argument("--save_dir", type=str, default=None)  # data path
     parser.add_argument("--max_num_examples_per_task", type=int, default=2000000) # max_num_examples_per_task, set -1 to disable it

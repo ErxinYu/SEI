@@ -3,45 +3,44 @@ import json
 from tqdm import tqdm
 import os
 
-client = OpenAI(api_key="<KEY>")
-client.base_url = "https://open.xiaoai.one/v1" 
-client.api_key = ""
+# Initialize OpenAI client with anonymized credentials
+client = OpenAI()
+client.base_url = "[API_ENDPOINT]"
+client.api_key = "[API_KEY]"
 
 def generate_prompt_new(row):
     content = f'''
-You are an expert in error analysis and categorization. You will be given a list of error keyword phrases. Your task is to:
 
-1. Analyze the given error keyword phrases and identify common themes or patterns.
-2. Group similar keyword phrases together based on their likely causes, effects, or areas of occurrence.
-3. For each cluster:
-   a. List the keyword phrases in the cluster.
-   b. Explain why these keyword phrases are grouped together.
-   c. Assign a concise but descriptive name to the cluster that captures its essence.
-4. Clusters should cover all the keyword phrases.
+You are an expert in error analysis and categorization. You will be given a list of error keyphrases. Your task is to:
+1. Analyze the given error keyphrases and identify common themes or patterns.
+2. Group similar keyphrases together based on their likely causes, effects, or areas of occurrence. 3. For each cluster:
+a. List the keyphrases in the cluster.
+b. Explain why these keyphrases are grouped together.
+c. Assign a concise but descriptive name to the cluster that captures its essence. 4. Clusters should cover all the keyphrases.
 5. Present your results in a clear, structured format.
-
 Strictly output in plain text according to the following format, do not output in other formats or with extra symbols:
+
 [
-{{"Cluster name":, "Keyword phrases":[], "explanation":,}}, 
-{{"Cluster name":, "Keyword phrases":[], "explanation":,}} ...
+{{"Cluster name":, "Keyphrases":[], "explanation":,}},
+{{"Cluster name":, "Keyphrases":[], "explanation":,}} ... 
 ]
 
 Your clustering should aim to provide meaningful insights that can help in understanding and addressing the errors more effectively.
-Here is the list of error keywords: 
-{row}
+Here is the list of error keyphrases: {Error Keyphrases Set}
 '''
     return content
 
-# 读取输入文件
-input_file = '/home/yex/LESS/output/gsm8k/qwen/2unique_error_keywords.txt'
-output_file = '/home/yex/LESS/output/gsm8k/qwen/3seedErrorCluster.json'
+# File paths
+input_file = '[PROJECT_ROOT]/output/gsm8k/qwen/2unique_error_keywords.txt'
+output_file = '[PROJECT_ROOT]/output/gsm8k/qwen/3seedErrorCluster.json'
 
+# Read input data
 data = []
 with open(input_file, 'r') as f:
     for line in f:
         data.append(line.strip())
 
-# 就处理每一行数据
+# Process each line
 with open(output_file, 'w') as f:
     for i, row in enumerate(data, start=1):
         print(i)
@@ -53,19 +52,20 @@ with open(output_file, 'w') as f:
             ],
         )
         error_cluster = resp.choices[0].message.content
-        # print("error_keywords", error_cluster)
 
-        # 使用 eval() 解析字符串为 Python 对象
+        # Parse response to Python object
         error_cluster = eval(error_cluster)
         print(error_cluster)
-        num = 0
-        for cluster in error_cluster:
-            num += len(cluster['Keyword phrases'])
+        
+        # Count total phrases
+        num = sum(len(cluster['Keyword phrases']) for cluster in error_cluster)
         print(num)
-        # 确保 error_cluster 是一个列表
+        
+        # Write results if valid
         if isinstance(error_cluster, list):
             for error in error_cluster:
                 json.dump(error, f)
                 f.write('\n')
         break
+
 print(f"Processing complete. Results saved to {output_file}")

@@ -9,6 +9,12 @@ The figure illustrates our Self-Error-Instruct framework, which consists of four
 
 <img src="method.png" width="80%" height="auto" />
 
+### Installation
+
+```
+conda env create -f environment.yml
+```
+
 ### Step 1. Bad Case Extraction
 
 ```
