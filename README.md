@@ -11,4 +11,6 @@ The figure illustrates our Self-Error-Instruct framework, which consists of four
 
 ## Step 1. Bad Case Extraction
 
-`bash badcase extraction.sh`
+```
+bash badcase extraction.sh 
+```
