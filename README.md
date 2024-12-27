@@ -9,8 +9,31 @@ The figure illustrates our Self-Error-Instruct framework, which consists of four
 
 <img src="method.png" width="80%" height="auto" />
 
-## Step 1. Bad Case Extraction
+### Step 1. Bad Case Extraction
 
 ```
 bash badcase extraction.sh 
+```
+
+### Step 2. Self-Error-Instruct
+
+```
+python keyphraseGeneration.py
+python keyphraseCluster.py
+python type-specific data synthetic.py
+```
+
+### Step 3. One-shot Learning Selction
+```
+bash one-shot_selection.sh
+```
+
+### Step 4. Training
+```
+bash training.sh
+```
+
+## Evaluation
+```
+bash eval.sh
 ```
