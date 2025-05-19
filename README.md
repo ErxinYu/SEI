@@ -1,5 +1,5 @@
 # Overview
-This repository contains the code and dataset for the ACL ARR submission: "Self-Error-Instruct: Generalizing from Errors for LLMs Mathematical Reasoning"
+This repository contains the code and dataset for the paper: "Self-Error-Instruct: Generalizing from Errors for LLMs Mathematical Reasoning"
 
 
 
